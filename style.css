@@ -205,9 +205,6 @@ nav a[aria-current="page"] {
 }
 
 
-/* ==========================================================================
-   6. FORMS & SEARCH
-   ========================================================================== */
 form {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -626,10 +623,7 @@ footer a {
 }
 
 
-/* ==========================================================================
-   13. ACCESSIBILITY — prefers-reduced-motion
-   Disables all animations for users who request reduced motion.
-   ========================================================================== */
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration:        0.001ms !important;
@@ -644,10 +638,7 @@ footer a {
 }
 
 
-/* ==========================================================================
-   14. COLOR SCHEME — Dark Mode
-   Redefines CSS variables when the OS/browser prefers dark.
-   ========================================================================== */
+
 @media (prefers-color-scheme: dark) {
   :root {
     --color-primary:    #4a7fc1;
