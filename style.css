@@ -1,0 +1,788 @@
+
+:root {
+  /* Brand colors */
+  --color-primary:    #1a3a6b;   /* deep navy  */
+  --color-accent:     #e8c131;   /* gold       */
+  --color-accent-alt: #d94f3d;   /* race red   */
+
+  /* Surface colors */
+  --color-bg:         #f5f4f0;
+  --color-surface:    #ffffff;
+  --color-surface-2:  #eceae3;
+  --color-border:     #d0ccbf;
+
+  /* Text */
+  --color-text:       #1a1a1a;
+  --color-text-muted: #5a5750;
+  --color-link:       #1a3a6b;
+  --color-link-hover: #e8c131;
+
+  /* Table stripe */
+  --color-row-even:   #f0eeea;
+  --color-row-odd:    #ffffff;
+
+  /* Typography */
+  --font-display: 'Oswald', 'Arial Narrow', sans-serif;
+  --font-body:    'Source Serif 4', Georgia, serif;
+  --font-mono:    'JetBrains Mono', monospace;
+
+  /* Sizing */
+  --radius:   8px;
+  --radius-lg: 16px;
+  --shadow:   0 2px 12px rgba(0,0,0,.12);
+  --shadow-lg: 0 6px 28px rgba(0,0,0,.18);
+
+  /* Transition */
+  --transition: 0.25s ease;
+}
+
+
+/* ==========================================================================
+   2. RESET & BASE
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  /* Smooth font scaling between 375px and 900px viewports */
+  font-size: clamp(15px, 2vw, 17px);
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.65;
+  min-height: 100vh;
+  /* Subtle diagonal grain texture */
+  background-image: repeating-linear-gradient(
+    135deg,
+    transparent,
+    transparent 40px,
+    rgba(0,0,0,.015) 40px,
+    rgba(0,0,0,.015) 41px
+  );
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--color-link);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--transition);
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--color-accent-alt);
+  outline: none;
+}
+
+/* Visible focus ring for keyboard navigation (accessibility) */
+:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+ul {
+  list-style: none;
+}
+
+
+/* ==========================================================================
+   3. TYPOGRAPHY
+   Google Fonts loaded inline in HTML or via @import below.
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap');
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  letter-spacing: .02em;
+  color: var(--color-primary);
+}
+
+/* Responsive heading sizes using clamp() */
+h1 { font-size: clamp(1.5rem, 5vw, 2.2rem); font-weight: 700; }
+h2 { font-size: clamp(1.2rem, 4vw, 1.7rem); font-weight: 600; }
+h3 { font-size: clamp(1rem, 3vw, 1.3rem);   font-weight: 600; }
+
+p  { margin-bottom: .75rem; }
+
+
+/* ==========================================================================
+   4. LAYOUT & STRUCTURE
+   Single-column mobile base; expands at breakpoints.
+   ========================================================================== */
+main {
+  padding: 1rem;
+  max-width: 960px;
+  margin: 0 auto;
+  /* Fade-in on page load */
+  animation: fadeInUp .5s ease both;
+}
+
+section {
+  margin-bottom: 2rem;
+}
+
+
+/* ==========================================================================
+   5. HEADER & NAVIGATION
+   ========================================================================== */
+header {
+  background-color: var(--color-primary);
+  color: #fff;
+  padding: .85rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  /* Thin gold accent line on bottom */
+  border-bottom: 3px solid var(--color-accent);
+  box-shadow: var(--shadow);
+  /* Slide down on load */
+  animation: slideDown .4s ease both;
+}
+
+header h1 {
+  color: #fff;
+  font-size: clamp(1.1rem, 4vw, 1.5rem);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+header h1 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+header h1 a:hover {
+  color: var(--color-accent);
+}
+
+/* Nav bar */
+nav ul {
+  display: flex;
+  gap: .5rem;
+  margin-top: .5rem;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: rgba(255,255,255,.82);
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-size: .9rem;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  padding: .3rem .7rem;
+  border-radius: var(--radius);
+  transition: background var(--transition), color var(--transition);
+}
+
+nav a:hover,
+nav a:focus-visible {
+  background: var(--color-accent);
+  color: var(--color-primary);
+}
+
+/* Active page link */
+nav a[aria-current="page"] {
+  background: var(--color-accent);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+
+/* ==========================================================================
+   6. FORMS & SEARCH
+   ========================================================================== */
+form {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+fieldset {
+  border: none;
+}
+
+legend {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: .75rem;
+}
+
+label {
+  display: block;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  margin-bottom: .25rem;
+  margin-top: .75rem;
+}
+
+input[type="search"],
+select {
+  width: 100%;
+  padding: .6rem .85rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  background: var(--color-bg);
+  color: var(--color-text);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+input[type="search"]:focus,
+select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(26,58,107,.2);
+  outline: none;
+}
+
+button[type="submit"] {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: .65rem 1.5rem;
+  background: var(--color-primary);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+}
+
+button[type="submit"]:hover,
+button[type="submit"]:focus-visible {
+  background: var(--color-accent-alt);
+  transform: translateY(-1px);
+}
+
+button[type="submit"]:active {
+  transform: translateY(0);
+}
+
+
+/* ==========================================================================
+   7. TABLES
+   Mobile: card-reflow layout.
+   Desktop (600px+): standard scrollable table.
+   ========================================================================== */
+
+/* --- Shared wrapper for horizontal scroll on wider content --- */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .9rem;
+}
+
+th {
+  background-color: var(--color-primary);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  padding: .7rem .85rem;
+  text-align: left;
+}
+
+td {
+  padding: .65rem .85rem;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+/* Alternating row colors */
+tbody tr:nth-child(even) td { background-color: var(--color-row-even); }
+tbody tr:nth-child(odd)  td { background-color: var(--color-row-odd);  }
+
+/* Row hover highlight */
+tbody tr {
+  transition: background var(--transition);
+}
+tbody tr:hover td {
+  background-color: rgba(232,193,49,.18);
+}
+
+/* ==========================================================
+   MOBILE CARD REFLOW (below 600px)
+   Hides the <thead> and transforms each <td> into a labeled
+   card row using data-label attributes.
+   ========================================================== */
+@media (max-width: 599px) {
+  /* Hide table headers — content surfaced via data-label */
+  table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+  }
+
+  table, tbody, tr, td {
+    display: block;
+    width: 100%;
+  }
+
+  /* Each row becomes a card */
+  tbody tr {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    margin-bottom: .85rem;
+    padding: .5rem;
+    box-shadow: var(--shadow);
+    /* Staggered slide-in for each card */
+    animation: cardSlideIn .4s ease both;
+  }
+
+  /* Give each row a slight delay for stagger effect */
+  tbody tr:nth-child(1) { animation-delay: .05s; }
+  tbody tr:nth-child(2) { animation-delay: .10s; }
+  tbody tr:nth-child(3) { animation-delay: .15s; }
+  tbody tr:nth-child(4) { animation-delay: .20s; }
+  tbody tr:nth-child(5) { animation-delay: .25s; }
+
+  /* Each cell: label on left, value on right */
+  td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .45rem .6rem;
+    border-bottom: 1px dashed var(--color-border);
+    background: transparent !important; /* override stripe for cards */
+  }
+
+  td:last-child { border-bottom: none; }
+
+  /* Inject label from data-label attribute */
+  td::before {
+    content: attr(data-label);
+    font-family: var(--font-display);
+    font-size: .78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+    margin-right: 1rem;
+  }
+}
+
+
+/* ==========================================================================
+   8. ATHLETE PROFILE
+   ========================================================================== */
+
+/* Circular hero image */
+.athlete-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem 1rem;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  margin-bottom: 1.5rem;
+  animation: fadeInUp .5s ease both;
+}
+
+figure img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid var(--color-accent);
+  box-shadow: 0 0 0 4px var(--color-primary), var(--shadow-lg);
+  margin-bottom: 1rem;
+  /* Pop-in animation */
+  animation: popIn .5s cubic-bezier(.34,1.56,.64,1) both;
+}
+
+/* PR Badge */
+.pr-badge {
+  display: inline-block;
+  background: var(--color-accent);
+  color: var(--color-primary);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.4rem;
+  padding: .4rem 1.2rem;
+  border-radius: 999px;
+  letter-spacing: .05em;
+  margin-top: .5rem;
+}
+
+/* Info card sections */
+.info-card {
+  background: var(--color-surface);
+  border-left: 4px solid var(--color-accent);
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.info-card h3 {
+  margin-bottom: .5rem;
+  color: var(--color-primary);
+}
+
+/* Progress bar for season summary */
+.progress-bar-wrap {
+  background: var(--color-surface-2);
+  border-radius: 999px;
+  height: 12px;
+  overflow: hidden;
+  margin: .5rem 0 1rem;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-alt));
+  border-radius: 999px;
+  width: 0%;                        /* starts at 0 — JS or CSS drives it */
+  animation: growBar 1.2s ease .3s both;
+}
+
+/* Gallery grid */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: .75rem;
+}
+
+.gallery-grid img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 2px solid var(--color-border);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.gallery-grid img:hover,
+.gallery-grid img:focus {
+  transform: scale(1.04);
+  box-shadow: var(--shadow-lg);
+  outline: none;
+}
+
+
+/* ==========================================================================
+   9. MEETS PAGE
+   ========================================================================== */
+.meet-header {
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: 1.2rem;
+}
+
+.meet-header h2 { color: #fff; }
+
+.meet-header time,
+.meet-header a {
+  color: var(--color-accent);
+  font-family: var(--font-display);
+  font-size: .9rem;
+  letter-spacing: .04em;
+}
+
+
+/* ==========================================================================
+   10. ANIMATIONS & KEYFRAMES
+   ========================================================================== */
+
+/* Fade + slide up — used for main content */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* Header slides down from top */
+@keyframes slideDown {
+  from { transform: translateY(-100%); }
+  to   { transform: translateY(0);     }
+}
+
+/* Card row slides in from left */
+@keyframes cardSlideIn {
+  from { opacity: 0; transform: translateX(-16px); }
+  to   { opacity: 1; transform: translateX(0);     }
+}
+
+/* Profile image pops in */
+@keyframes popIn {
+  from { opacity: 0; transform: scale(.5); }
+  to   { opacity: 1; transform: scale(1);  }
+}
+
+/* Progress bar grows right */
+@keyframes growBar {
+  from { width: 0%; }
+  to   { width: 82%; }  /* adjust to actual performance % if desired */
+}
+
+/* Pulsing glow for FAB */
+@keyframes fabPulse {
+  0%, 100% { box-shadow: 0 4px 18px rgba(232,193,49,.45); }
+  50%       { box-shadow: 0 4px 28px rgba(232,193,49,.8);  }
+}
+
+/* Spinner for loading states */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+
+/* ==========================================================================
+   11. FLOATING ACTION BUTTON (FAB)
+   Fixed in bottom-right corner; quick scroll-to-top.
+   ========================================================================== */
+.fab {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.25rem;
+  width: 52px;
+  height: 52px;
+  background: var(--color-accent);
+  color: var(--color-primary);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 200;
+  box-shadow: 0 4px 18px rgba(232,193,49,.45);
+  animation: fabPulse 2.5s ease-in-out infinite;
+  transition: transform var(--transition), background var(--transition);
+  /* Screen-reader label via aria-label on the element */
+}
+
+.fab:hover,
+.fab:focus-visible {
+  background: var(--color-accent-alt);
+  transform: scale(1.1);
+}
+
+
+/* ==========================================================================
+   12. FOOTER
+   ========================================================================== */
+footer {
+  background: var(--color-primary);
+  color: rgba(255,255,255,.7);
+  text-align: center;
+  padding: 1rem;
+  font-size: .85rem;
+  border-top: 3px solid var(--color-accent);
+}
+
+footer a {
+  color: var(--color-accent);
+}
+
+
+/* ==========================================================================
+   13. ACCESSIBILITY — prefers-reduced-motion
+   Disables all animations for users who request reduced motion.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration:        0.001ms !important;
+    animation-iteration-count: 1       !important;
+    transition-duration:       0.001ms !important;
+    scroll-behavior:           auto    !important;
+  }
+
+  .fab {
+    animation: none;
+  }
+}
+
+
+/* ==========================================================================
+   14. COLOR SCHEME — Dark Mode
+   Redefines CSS variables when the OS/browser prefers dark.
+   ========================================================================== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primary:    #4a7fc1;
+    --color-accent:     #e8c131;
+    --color-accent-alt: #f07060;
+
+    --color-bg:         #111318;
+    --color-surface:    #1c1f27;
+    --color-surface-2:  #252932;
+    --color-border:     #333844;
+
+    --color-text:       #e8e5de;
+    --color-text-muted: #9a9590;
+    --color-link:       #82aee0;
+    --color-link-hover: #e8c131;
+
+    --color-row-even:   #232630;
+    --color-row-odd:    #1c1f27;
+  }
+
+  /* Keep header dark navy even in dark mode */
+  header {
+    background-color: #0d1421;
+  }
+
+  th {
+    background-color: #0d1421;
+  }
+
+  .meet-header {
+    background-color: #0d1421;
+  }
+
+  /* Slightly soften the grain in dark mode */
+  body {
+    background-image: repeating-linear-gradient(
+      135deg,
+      transparent,
+      transparent 40px,
+      rgba(255,255,255,.012) 40px,
+      rgba(255,255,255,.012) 41px
+    );
+  }
+}
+
+
+/* ==========================================================================
+   15. MEDIA QUERIES — Tablet (600px+) and Desktop (900px+)
+   Mobile-first: these styles ADD to and OVERRIDE the base mobile styles.
+   ========================================================================== */
+
+/* --- Tablet (600px and up) --- */
+@media (min-width: 600px) {
+  main {
+    padding: 1.5rem;
+  }
+
+  /* Restore normal table layout on tablet+ */
+  table {
+    display: table;
+  }
+
+  table thead {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+
+  tbody, tr, td {
+    display: table-row;
+    width: auto;
+  }
+
+  td {
+    display: table-cell;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  td::before {
+    display: none; /* hide card labels */
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  form fieldset {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 0 1rem;
+    align-items: end;
+  }
+
+  form legend {
+    grid-column: 1 / -1;
+  }
+
+  button[type="submit"] {
+    margin-top: 0;
+    align-self: end;
+  }
+}
+
+/* --- Desktop (900px and up) --- */
+@media (min-width: 900px) {
+  main {
+    padding: 2rem;
+  }
+
+  .athlete-hero {
+    flex-direction: row;
+    text-align: left;
+    gap: 2rem;
+  }
+
+  figure img {
+    width: 180px;
+    height: 180px;
+    flex-shrink: 0;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* Force mobile view regardless of screen size */
+/* (per assignment: "we only want to see the mobile version") */
+@media (min-width: 1px) {
+  /* Cap the content width and center it to simulate mobile */
+  body {
+    max-width: 430px;
+    margin: 0 auto;
+  }
+}
