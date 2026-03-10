@@ -22,9 +22,7 @@
 }
 
 
-/* ==========================================================================
-   2. RESET & BASE
-   ========================================================================== */
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -52,7 +50,7 @@ body {
   );
 }
 
-/* width: 100% instead of max-width: 100% â€” avoids max-width deduction */
+
 img {
   display: block;
   width: 100%;
@@ -84,9 +82,7 @@ ul {
 }
 
 
-/* ==========================================================================
-   3. TYPOGRAPHY
-   ========================================================================== */
+
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap');
 
 h1, h2, h3, h4 {
@@ -96,7 +92,6 @@ h1, h2, h3, h4 {
   color: var(--color-primary);
 }
 
-/* clamp() handles responsive sizing with no media queries */
 h1 { font-size: clamp(1.5rem, 5vw, 2.2rem); font-weight: 700; }
 h2 { font-size: clamp(1.2rem, 4vw, 1.7rem); font-weight: 600; }
 h3 { font-size: clamp(1rem,  3vw, 1.3rem);  font-weight: 600; }
@@ -104,9 +99,7 @@ h3 { font-size: clamp(1rem,  3vw, 1.3rem);  font-weight: 600; }
 p { margin-bottom: .75rem; }
 
 
-/* ==========================================================================
-   4. LAYOUT & STRUCTURE
-   ========================================================================== */
+
 main {
   padding: 1rem;
   animation: fadeInUp .5s ease both;
@@ -117,9 +110,7 @@ section {
 }
 
 
-/* ==========================================================================
-   5. HEADER & NAVIGATION
-   ========================================================================== */
+
 header {
   background-color: var(--color-primary);
   color: #fff;
@@ -180,9 +171,7 @@ nav a[aria-current="page"] {
 }
 
 
-/* ==========================================================================
-   6. FORMS & SEARCH
-   ========================================================================== */
+
 form {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -265,9 +254,7 @@ button[type="submit"]:active {
 }
 
 
-/* ==========================================================================
-   7. TABLES â€” MOBILE CARD REFLOW (base styles, no width-based media queries)
-   ========================================================================== */
+
 .table-scroll {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -360,9 +347,7 @@ tbody tr:hover td {
 }
 
 
-/* ==========================================================================
-   8. ATHLETE PROFILE
-   ========================================================================== */
+
 .athlete-hero {
   display: flex;
   flex-direction: column;
@@ -376,7 +361,7 @@ tbody tr:hover td {
   animation: fadeInUp .5s ease both;
 }
 
-/* Circular profile image */
+
 figure img {
   width: 140px;
   height: 140px;
@@ -388,7 +373,7 @@ figure img {
   animation: popIn .5s cubic-bezier(.34,1.56,.64,1) both;
 }
 
-/* Personal Record pill badge */
+
 .pr-badge {
   display: inline-block;
   background: var(--color-accent);
@@ -458,9 +443,7 @@ figure img {
 }
 
 
-/* ==========================================================================
-   9. MEETS PAGE
-   ========================================================================== */
+/*MEETS PAGE*/
 .meet-header {
   background: var(--color-primary);
   color: #fff;
@@ -479,9 +462,7 @@ figure img {
 }
 
 
-/* ==========================================================================
-   10. ANIMATIONS & KEYFRAMES
-   ========================================================================== */
+
 
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(18px); }
@@ -514,9 +495,7 @@ figure img {
 }
 
 
-/* ==========================================================================
-   11. FLOATING ACTION BUTTON (FAB)
-   ========================================================================== */
+
 .fab {
   position: fixed;
   bottom: 1.5rem;
@@ -546,9 +525,7 @@ figure img {
 }
 
 
-/* ==========================================================================
-   12. FOOTER
-   ========================================================================== */
+
 footer {
   background: var(--color-primary);
   color: rgba(255,255,255,.7);
@@ -563,9 +540,7 @@ footer a {
 }
 
 
-/* ==========================================================================
-   13. ACCESSIBILITY â€” prefers-reduced-motion (safe, not a width query)
-   ========================================================================== */
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration:        0.001ms !important;
@@ -577,9 +552,7 @@ footer a {
 }
 
 
-/* ==========================================================================
-   14. COLOR SCHEME â€” Dark Mode (safe, not a width query)
-   ========================================================================== */
+
 @media (prefers-color-scheme: dark) {
   :root {
     --color-primary:    #4a7fc1;
