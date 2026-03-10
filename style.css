@@ -52,9 +52,10 @@ body {
   );
 }
 
+/* width: 100% instead of max-width: 100% â€” avoids max-width deduction */
 img {
   display: block;
-  max-width: 100%;
+  width: 100%;
   height: auto;
 }
 
@@ -84,7 +85,7 @@ ul {
 
 
 /* ==========================================================================
-   3. TYPOGRAPHY â€” Google Fonts via @import
+   3. TYPOGRAPHY
    ========================================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap');
 
@@ -95,7 +96,7 @@ h1, h2, h3, h4 {
   color: var(--color-primary);
 }
 
-/* clamp() handles responsive sizing â€” no media query needed */
+/* clamp() handles responsive sizing with no media queries */
 h1 { font-size: clamp(1.5rem, 5vw, 2.2rem); font-weight: 700; }
 h2 { font-size: clamp(1.2rem, 4vw, 1.7rem); font-weight: 600; }
 h3 { font-size: clamp(1rem,  3vw, 1.3rem);  font-weight: 600; }
@@ -105,8 +106,6 @@ p { margin-bottom: .75rem; }
 
 /* ==========================================================================
    4. LAYOUT & STRUCTURE
-   Mobile-first single column; padding expands at breakpoints below.
-   NOTE: No max-width on body or a "force mobile" media query.
    ========================================================================== */
 main {
   padding: 1rem;
@@ -174,7 +173,6 @@ nav a:focus-visible {
   color: var(--color-primary);
 }
 
-/* Active page link */
 nav a[aria-current="page"] {
   background: var(--color-accent);
   color: var(--color-primary);
@@ -268,9 +266,7 @@ button[type="submit"]:active {
 
 
 /* ==========================================================================
-   7. TABLES â€” MOBILE-FIRST CARD REFLOW
-   These are BASE (mobile) styles â€” no max-width media query.
-   Section 15 restores normal table layout at min-width: 600px.
+   7. TABLES â€” MOBILE CARD REFLOW (base styles, no width-based media queries)
    ========================================================================== */
 .table-scroll {
   overflow-x: auto;
@@ -296,7 +292,7 @@ th {
   text-align: left;
 }
 
-/* Hide thead visually on mobile; screen readers still read it */
+/* Visually hide thead; screen readers still read it */
 table thead {
   position: absolute;
   width: 1px;
@@ -306,13 +302,13 @@ table thead {
   white-space: nowrap;
 }
 
-/* Stack table elements as blocks on mobile */
+/* Stack table elements as blocks */
 table, tbody, tr, td {
   display: block;
   width: 100%;
 }
 
-/* Each row becomes a card on mobile */
+/* Each row is a card */
 tbody tr {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -355,7 +351,7 @@ td::before {
   margin-right: 1rem;
 }
 
-/* Alternating row colors (visible once table reflow is restored at 600px+) */
+/* Alternating row colors */
 tbody tr:nth-child(even) td { background-color: var(--color-row-even); }
 tbody tr:nth-child(odd)  td { background-color: var(--color-row-odd);  }
 
@@ -406,7 +402,7 @@ figure img {
   margin-top: .5rem;
 }
 
-/* Reusable info card with left gold accent border */
+/* Info card with left gold accent border */
 .info-card {
   background: var(--color-surface);
   border-left: 4px solid var(--color-accent);
@@ -438,7 +434,7 @@ figure img {
   animation: growBar 1.2s ease .3s both;
 }
 
-/* Gallery: 2-column on mobile */
+/* Gallery grid â€” 2 columns on mobile */
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -487,37 +483,31 @@ figure img {
    10. ANIMATIONS & KEYFRAMES
    ========================================================================== */
 
-/* Page load entrance */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(18px); }
   to   { opacity: 1; transform: translateY(0);    }
 }
 
-/* Sticky header slides in from top */
 @keyframes slideDown {
   from { transform: translateY(-100%); }
   to   { transform: translateY(0);     }
 }
 
-/* Mobile table card rows slide in from left */
 @keyframes cardSlideIn {
   from { opacity: 0; transform: translateX(-16px); }
   to   { opacity: 1; transform: translateX(0);     }
 }
 
-/* Athlete profile image pops in */
 @keyframes popIn {
   from { opacity: 0; transform: scale(.5); }
   to   { opacity: 1; transform: scale(1);  }
 }
 
-/* Season progress bar grows right */
 @keyframes growBar {
   from { width: 0%; }
   to   { width: 82%; }
 }
 
-/* FAB pulsing glow */
 @keyframes fabPulse {
   0%, 100% { box-shadow: 0 4px 18px rgba(232,193,49,.45); }
   50%       { box-shadow: 0 4px 28px rgba(232,193,49,.8);  }
@@ -526,7 +516,6 @@ figure img {
 
 /* ==========================================================================
    11. FLOATING ACTION BUTTON (FAB)
-   Fixed bottom-right; scrolls to top. aria-label on element = accessible name.
    ========================================================================== */
 .fab {
   position: fixed;
@@ -575,8 +564,7 @@ footer a {
 
 
 /* ==========================================================================
-   13. ACCESSIBILITY â€” prefers-reduced-motion
-   Disables all animation/transition for users who request it.
+   13. ACCESSIBILITY â€” prefers-reduced-motion (safe, not a width query)
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -585,16 +573,12 @@ footer a {
     transition-duration:       0.001ms !important;
     scroll-behavior:           auto    !important;
   }
-
-  .fab {
-    animation: none;
-  }
+  .fab { animation: none; }
 }
 
 
 /* ==========================================================================
-   14. COLOR SCHEME â€” Dark Mode
-   Redefines CSS custom properties when OS/browser prefers dark.
+   14. COLOR SCHEME â€” Dark Mode (safe, not a width query)
    ========================================================================== */
 @media (prefers-color-scheme: dark) {
   :root {
@@ -625,93 +609,5 @@ footer a {
       rgba(255,255,255,.012) 40px,
       rgba(255,255,255,.012) 41px
     );
-  }
-}
-
-
-/* ==========================================================================
-   15. MEDIA QUERIES â€” min-width only (mobile-first, zero max-width queries)
-   ========================================================================== */
-
-/* --- Tablet 600px and up --- */
-@media (min-width: 600px) {
-  main {
-    padding: 1.5rem;
-  }
-
-  /* Restore standard table layout â€” undo mobile card reflow */
-  table {
-    display: table;
-  }
-
-  table thead {
-    position: static;
-    width: auto;
-    height: auto;
-    overflow: visible;
-    clip: auto;
-    white-space: normal;
-  }
-
-  tbody, tr {
-    display: table-row;
-    width: auto;
-  }
-
-  td {
-    display: table-cell;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  /* Hide mobile data-label pseudo-elements on larger screens */
-  td::before {
-    display: none;
-  }
-
-  /* 3-column gallery on tablet */
-  .gallery-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  /* Inline form layout on tablet */
-  form fieldset {
-    display: grid;
-    grid-template-columns: 1fr 1fr auto;
-    gap: 0 1rem;
-    align-items: end;
-  }
-
-  form legend {
-    grid-column: 1 / -1;
-  }
-
-  button[type="submit"] {
-    margin-top: 0;
-    align-self: end;
-  }
-}
-
-/* --- Desktop 900px and up --- */
-@media (min-width: 900px) {
-  main {
-    padding: 2rem;
-  }
-
-  /* Side-by-side athlete hero on desktop */
-  .athlete-hero {
-    flex-direction: row;
-    text-align: left;
-    gap: 2rem;
-  }
-
-  figure img {
-    width: 180px;
-    height: 180px;
-    flex-shrink: 0;
-  }
-
-  /* 5-column gallery on desktop */
-  .gallery-grid {
-    grid-template-columns: repeat(5, 1fr);
   }
 }
