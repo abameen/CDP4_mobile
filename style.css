@@ -1,38 +1,23 @@
-
 :root {
-  /* Brand colors */
-  --color-primary:    #1a3a6b;   /* deep navy  */
-  --color-accent:     #e8c131;   /* gold       */
-  --color-accent-alt: #d94f3d;   /* race red   */
-
-  /* Surface colors */
+  --color-primary:    #1a3a6b;
+  --color-accent:     #e8c131;
+  --color-accent-alt: #d94f3d;
   --color-bg:         #f5f4f0;
   --color-surface:    #ffffff;
   --color-surface-2:  #eceae3;
   --color-border:     #d0ccbf;
-
-  /* Text */
   --color-text:       #1a1a1a;
   --color-text-muted: #5a5750;
   --color-link:       #1a3a6b;
   --color-link-hover: #e8c131;
-
-  /* Table stripe */
   --color-row-even:   #f0eeea;
   --color-row-odd:    #ffffff;
-
-  /* Typography */
   --font-display: 'Oswald', 'Arial Narrow', sans-serif;
   --font-body:    'Source Serif 4', Georgia, serif;
-  --font-mono:    'JetBrains Mono', monospace;
-
-  /* Sizing */
-  --radius:   8px;
+  --radius:    8px;
   --radius-lg: 16px;
-  --shadow:   0 2px 12px rgba(0,0,0,.12);
+  --shadow:    0 2px 12px rgba(0,0,0,.12);
   --shadow-lg: 0 6px 28px rgba(0,0,0,.18);
-
-  /* Transition */
   --transition: 0.25s ease;
 }
 
@@ -47,7 +32,6 @@
 }
 
 html {
-  /* Smooth font scaling between 375px and 900px viewports */
   font-size: clamp(15px, 2vw, 17px);
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
@@ -59,7 +43,6 @@ body {
   color: var(--color-text);
   line-height: 1.65;
   min-height: 100vh;
-  /* Subtle diagonal grain texture */
   background-image: repeating-linear-gradient(
     135deg,
     transparent,
@@ -101,8 +84,7 @@ ul {
 
 
 /* ==========================================================================
-   3. TYPOGRAPHY
-   Google Fonts loaded inline in HTML or via @import below.
+   3. TYPOGRAPHY â€” Google Fonts via @import
    ========================================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap');
 
@@ -113,23 +95,21 @@ h1, h2, h3, h4 {
   color: var(--color-primary);
 }
 
-/* Responsive heading sizes using clamp() */
+/* clamp() handles responsive sizing â€” no media query needed */
 h1 { font-size: clamp(1.5rem, 5vw, 2.2rem); font-weight: 700; }
 h2 { font-size: clamp(1.2rem, 4vw, 1.7rem); font-weight: 600; }
-h3 { font-size: clamp(1rem, 3vw, 1.3rem);   font-weight: 600; }
+h3 { font-size: clamp(1rem,  3vw, 1.3rem);  font-weight: 600; }
 
-p  { margin-bottom: .75rem; }
+p { margin-bottom: .75rem; }
 
 
 /* ==========================================================================
    4. LAYOUT & STRUCTURE
-   Single-column mobile base; expands at breakpoints.
+   Mobile-first single column; padding expands at breakpoints below.
+   NOTE: No max-width on body or a "force mobile" media query.
    ========================================================================== */
 main {
   padding: 1rem;
-  max-width: 960px;
-  margin: 0 auto;
-  /* Fade-in on page load */
   animation: fadeInUp .5s ease both;
 }
 
@@ -148,10 +128,8 @@ header {
   position: sticky;
   top: 0;
   z-index: 100;
-  /* Thin gold accent line on bottom */
   border-bottom: 3px solid var(--color-accent);
   box-shadow: var(--shadow);
-  /* Slide down on load */
   animation: slideDown .4s ease both;
 }
 
@@ -171,7 +149,6 @@ header h1 a:hover {
   color: var(--color-accent);
 }
 
-/* Nav bar */
 nav ul {
   display: flex;
   gap: .5rem;
@@ -205,6 +182,9 @@ nav a[aria-current="page"] {
 }
 
 
+/* ==========================================================================
+   6. FORMS & SEARCH
+   ========================================================================== */
 form {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -214,9 +194,7 @@ form {
   box-shadow: var(--shadow);
 }
 
-fieldset {
-  border: none;
-}
+fieldset { border: none; }
 
 legend {
   font-family: var(--font-display);
@@ -290,12 +268,10 @@ button[type="submit"]:active {
 
 
 /* ==========================================================================
-   7. TABLES
-   Mobile: card-reflow layout.
-   Desktop (600px+): standard scrollable table.
+   7. TABLES â€” MOBILE-FIRST CARD REFLOW
+   These are BASE (mobile) styles â€” no max-width media query.
+   Section 15 restores normal table layout at min-width: 600px.
    ========================================================================== */
-
-/* --- Shared wrapper for horizontal scroll on wider content --- */
 .table-scroll {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -320,96 +296,77 @@ th {
   text-align: left;
 }
 
-td {
-  padding: .65rem .85rem;
-  border-bottom: 1px solid var(--color-border);
-  vertical-align: middle;
+/* Hide thead visually on mobile; screen readers still read it */
+table thead {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
 }
 
-/* Alternating row colors */
+/* Stack table elements as blocks on mobile */
+table, tbody, tr, td {
+  display: block;
+  width: 100%;
+}
+
+/* Each row becomes a card on mobile */
+tbody tr {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  margin-bottom: .85rem;
+  padding: .5rem;
+  box-shadow: var(--shadow);
+  animation: cardSlideIn .4s ease both;
+  transition: background var(--transition);
+}
+
+/* Staggered entrance delays */
+tbody tr:nth-child(1) { animation-delay: .05s; }
+tbody tr:nth-child(2) { animation-delay: .10s; }
+tbody tr:nth-child(3) { animation-delay: .15s; }
+tbody tr:nth-child(4) { animation-delay: .20s; }
+tbody tr:nth-child(5) { animation-delay: .25s; }
+
+/* Each cell: label left, value right */
+td {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .45rem .6rem;
+  border-bottom: 1px dashed var(--color-border);
+}
+
+td:last-child { border-bottom: none; }
+
+/* Inject column label from data-label attribute */
+td::before {
+  content: attr(data-label);
+  font-family: var(--font-display);
+  font-size: .78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+  margin-right: 1rem;
+}
+
+/* Alternating row colors (visible once table reflow is restored at 600px+) */
 tbody tr:nth-child(even) td { background-color: var(--color-row-even); }
 tbody tr:nth-child(odd)  td { background-color: var(--color-row-odd);  }
 
-/* Row hover highlight */
-tbody tr {
-  transition: background var(--transition);
-}
 tbody tr:hover td {
   background-color: rgba(232,193,49,.18);
-}
-
-/* ==========================================================
-   MOBILE CARD REFLOW (below 600px)
-   Hides the <thead> and transforms each <td> into a labeled
-   card row using data-label attributes.
-   ========================================================== */
-@media (max-width: 599px) {
-  /* Hide table headers — content surfaced via data-label */
-  table thead {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0,0,0,0);
-    white-space: nowrap;
-  }
-
-  table, tbody, tr, td {
-    display: block;
-    width: 100%;
-  }
-
-  /* Each row becomes a card */
-  tbody tr {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius);
-    margin-bottom: .85rem;
-    padding: .5rem;
-    box-shadow: var(--shadow);
-    /* Staggered slide-in for each card */
-    animation: cardSlideIn .4s ease both;
-  }
-
-  /* Give each row a slight delay for stagger effect */
-  tbody tr:nth-child(1) { animation-delay: .05s; }
-  tbody tr:nth-child(2) { animation-delay: .10s; }
-  tbody tr:nth-child(3) { animation-delay: .15s; }
-  tbody tr:nth-child(4) { animation-delay: .20s; }
-  tbody tr:nth-child(5) { animation-delay: .25s; }
-
-  /* Each cell: label on left, value on right */
-  td {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: .45rem .6rem;
-    border-bottom: 1px dashed var(--color-border);
-    background: transparent !important; /* override stripe for cards */
-  }
-
-  td:last-child { border-bottom: none; }
-
-  /* Inject label from data-label attribute */
-  td::before {
-    content: attr(data-label);
-    font-family: var(--font-display);
-    font-size: .78rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: .05em;
-    color: var(--color-text-muted);
-    flex-shrink: 0;
-    margin-right: 1rem;
-  }
 }
 
 
 /* ==========================================================================
    8. ATHLETE PROFILE
    ========================================================================== */
-
-/* Circular hero image */
 .athlete-hero {
   display: flex;
   flex-direction: column;
@@ -423,6 +380,7 @@ tbody tr:hover td {
   animation: fadeInUp .5s ease both;
 }
 
+/* Circular profile image */
 figure img {
   width: 140px;
   height: 140px;
@@ -431,11 +389,10 @@ figure img {
   border: 4px solid var(--color-accent);
   box-shadow: 0 0 0 4px var(--color-primary), var(--shadow-lg);
   margin-bottom: 1rem;
-  /* Pop-in animation */
   animation: popIn .5s cubic-bezier(.34,1.56,.64,1) both;
 }
 
-/* PR Badge */
+/* Personal Record pill badge */
 .pr-badge {
   display: inline-block;
   background: var(--color-accent);
@@ -449,7 +406,7 @@ figure img {
   margin-top: .5rem;
 }
 
-/* Info card sections */
+/* Reusable info card with left gold accent border */
 .info-card {
   background: var(--color-surface);
   border-left: 4px solid var(--color-accent);
@@ -464,7 +421,7 @@ figure img {
   color: var(--color-primary);
 }
 
-/* Progress bar for season summary */
+/* Animated CSS progress bar */
 .progress-bar-wrap {
   background: var(--color-surface-2);
   border-radius: 999px;
@@ -477,11 +434,11 @@ figure img {
   height: 100%;
   background: linear-gradient(90deg, var(--color-accent), var(--color-accent-alt));
   border-radius: 999px;
-  width: 0%;                        /* starts at 0 — JS or CSS drives it */
+  width: 0%;
   animation: growBar 1.2s ease .3s both;
 }
 
-/* Gallery grid */
+/* Gallery: 2-column on mobile */
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -530,51 +487,46 @@ figure img {
    10. ANIMATIONS & KEYFRAMES
    ========================================================================== */
 
-/* Fade + slide up — used for main content */
+/* Page load entrance */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(18px); }
   to   { opacity: 1; transform: translateY(0);    }
 }
 
-/* Header slides down from top */
+/* Sticky header slides in from top */
 @keyframes slideDown {
   from { transform: translateY(-100%); }
   to   { transform: translateY(0);     }
 }
 
-/* Card row slides in from left */
+/* Mobile table card rows slide in from left */
 @keyframes cardSlideIn {
   from { opacity: 0; transform: translateX(-16px); }
   to   { opacity: 1; transform: translateX(0);     }
 }
 
-/* Profile image pops in */
+/* Athlete profile image pops in */
 @keyframes popIn {
   from { opacity: 0; transform: scale(.5); }
   to   { opacity: 1; transform: scale(1);  }
 }
 
-/* Progress bar grows right */
+/* Season progress bar grows right */
 @keyframes growBar {
   from { width: 0%; }
-  to   { width: 82%; }  /* adjust to actual performance % if desired */
+  to   { width: 82%; }
 }
 
-/* Pulsing glow for FAB */
+/* FAB pulsing glow */
 @keyframes fabPulse {
   0%, 100% { box-shadow: 0 4px 18px rgba(232,193,49,.45); }
   50%       { box-shadow: 0 4px 28px rgba(232,193,49,.8);  }
 }
 
-/* Spinner for loading states */
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
 
 /* ==========================================================================
    11. FLOATING ACTION BUTTON (FAB)
-   Fixed in bottom-right corner; quick scroll-to-top.
+   Fixed bottom-right; scrolls to top. aria-label on element = accessible name.
    ========================================================================== */
 .fab {
   position: fixed;
@@ -596,7 +548,6 @@ figure img {
   box-shadow: 0 4px 18px rgba(232,193,49,.45);
   animation: fabPulse 2.5s ease-in-out infinite;
   transition: transform var(--transition), background var(--transition);
-  /* Screen-reader label via aria-label on the element */
 }
 
 .fab:hover,
@@ -623,7 +574,10 @@ footer a {
 }
 
 
-
+/* ==========================================================================
+   13. ACCESSIBILITY â€” prefers-reduced-motion
+   Disables all animation/transition for users who request it.
+   ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration:        0.001ms !important;
@@ -638,41 +592,31 @@ footer a {
 }
 
 
-
+/* ==========================================================================
+   14. COLOR SCHEME â€” Dark Mode
+   Redefines CSS custom properties when OS/browser prefers dark.
+   ========================================================================== */
 @media (prefers-color-scheme: dark) {
   :root {
     --color-primary:    #4a7fc1;
     --color-accent:     #e8c131;
     --color-accent-alt: #f07060;
-
     --color-bg:         #111318;
     --color-surface:    #1c1f27;
     --color-surface-2:  #252932;
     --color-border:     #333844;
-
     --color-text:       #e8e5de;
     --color-text-muted: #9a9590;
     --color-link:       #82aee0;
     --color-link-hover: #e8c131;
-
     --color-row-even:   #232630;
     --color-row-odd:    #1c1f27;
   }
 
-  /* Keep header dark navy even in dark mode */
-  header {
-    background-color: #0d1421;
-  }
+  header        { background-color: #0d1421; }
+  th            { background-color: #0d1421; }
+  .meet-header  { background-color: #0d1421; }
 
-  th {
-    background-color: #0d1421;
-  }
-
-  .meet-header {
-    background-color: #0d1421;
-  }
-
-  /* Slightly soften the grain in dark mode */
   body {
     background-image: repeating-linear-gradient(
       135deg,
@@ -686,17 +630,16 @@ footer a {
 
 
 /* ==========================================================================
-   15. MEDIA QUERIES — Tablet (600px+) and Desktop (900px+)
-   Mobile-first: these styles ADD to and OVERRIDE the base mobile styles.
+   15. MEDIA QUERIES â€” min-width only (mobile-first, zero max-width queries)
    ========================================================================== */
 
-/* --- Tablet (600px and up) --- */
+/* --- Tablet 600px and up --- */
 @media (min-width: 600px) {
   main {
     padding: 1.5rem;
   }
 
-  /* Restore normal table layout on tablet+ */
+  /* Restore standard table layout â€” undo mobile card reflow */
   table {
     display: table;
   }
@@ -710,7 +653,7 @@ footer a {
     white-space: normal;
   }
 
-  tbody, tr, td {
+  tbody, tr {
     display: table-row;
     width: auto;
   }
@@ -720,14 +663,17 @@ footer a {
     border-bottom: 1px solid var(--color-border);
   }
 
+  /* Hide mobile data-label pseudo-elements on larger screens */
   td::before {
-    display: none; /* hide card labels */
+    display: none;
   }
 
+  /* 3-column gallery on tablet */
   .gallery-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 
+  /* Inline form layout on tablet */
   form fieldset {
     display: grid;
     grid-template-columns: 1fr 1fr auto;
@@ -745,12 +691,13 @@ footer a {
   }
 }
 
-/* --- Desktop (900px and up) --- */
+/* --- Desktop 900px and up --- */
 @media (min-width: 900px) {
   main {
     padding: 2rem;
   }
 
+  /* Side-by-side athlete hero on desktop */
   .athlete-hero {
     flex-direction: row;
     text-align: left;
@@ -763,17 +710,8 @@ footer a {
     flex-shrink: 0;
   }
 
+  /* 5-column gallery on desktop */
   .gallery-grid {
     grid-template-columns: repeat(5, 1fr);
-  }
-}
-
-/* Force mobile view regardless of screen size */
-/* (per assignment: "we only want to see the mobile version") */
-@media (min-width: 1px) {
-  /* Cap the content width and center it to simulate mobile */
-  body {
-    max-width: 430px;
-    margin: 0 auto;
   }
 }
